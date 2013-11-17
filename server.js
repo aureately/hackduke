@@ -88,8 +88,9 @@ server.get('/loading', function(req,res){
 
 
 //ebay
-server.get('/', function(req,res){
-  res.render('index.jade', {
+var ebay = require('ebay-api');
+server.get('/ebay', function(req,res){
+  res.render('ebay.jade', {
     locals : { 
               title : 'Your Page Title'
              ,description: 'Your Page Description'
@@ -101,6 +102,34 @@ server.get('/', function(req,res){
 
 var paypal_sdk = require('paypal-rest-sdk');
 //paypal
+//szheng2-facilitator@live.com
+//api.sandbox.paypal.com
+//Client ID AQ7dlxAIADoVBkbKr8uqfB7ZHMb0pa5u50Q4gT8-2SElUBTvx9GsCDd0sIkX
+//EL50PxCf1_Cn4kK1eiwNNR0yMGtN66JMymCXj7hNlGonMqvAZGmbHdlOTIPq
+paypal_sdk.configure({
+  'host': 'api.sandbox.paypal.com',
+  'port': '',
+  'client_id': 'AQ7dlxAIADoVBkbKr8uqfB7ZHMb0pa5u50Q4gT8-2SElUBTvx9GsCDd0sIkX',
+  'client_secret': 'EL50PxCf1_Cn4kK1eiwNNR0yMGtN66JMymCXj7hNlGonMqvAZGmbHdlOTIPqeb'
+});
+
+var create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http:\/\/localhost\/test\/rest\/rest-api-sdk-php\/sample\/payments\/ExecutePayment.php?success=true",
+        "cancel_url": "http:\/\/localhost\/test\/rest\/rest-api-sdk-php\/sample\/payments\/ExecutePayment.php?success=false"
+    },
+    "transactions": [{
+        "amount": {
+            "currency": "USD",
+            "total": "1.00"
+        },
+        "description": "This is the payment description."
+    }]
+};
 server.get('/paypal', function(req,res){
    console.log("hello paypal");
   res.render('paypal.jade', {
