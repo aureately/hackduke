@@ -57,6 +57,8 @@ io.sockets.on('connection', function(socket){
 
 /////// ADD ALL YOUR ROUTES HERE  /////////
 
+
+//main page
 server.get('/', function(req,res){
   res.render('index.jade', {
     locals : { 
@@ -69,9 +71,54 @@ server.get('/', function(req,res){
 });
 
 
+//roulette page
+server.get('/loading', function(req,res){
+  res.render('loading.jade', {
+    locals : { 
+              title : 'Your Page Title'
+             ,description: 'Your Page Description'
+             ,author: 'Your Name'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+
+
+
+
+//ebay
+server.get('/', function(req,res){
+  res.render('index.jade', {
+    locals : { 
+              title : 'Your Page Title'
+             ,description: 'Your Page Description'
+             ,author: 'Your Name'
+             ,analyticssiteid: 'XXXXXXX' 
+            }
+  });
+});
+
+var paypal_sdk = require('paypal-rest-sdk');
+//paypal
+server.get('/paypal', function(req,res){
+   console.log("hello paypal");
+  res.render('paypal.jade', {
+    locals : { 
+              title : 'Your Page Title'
+             ,description: 'Your Page Description'
+             ,author: 'Your Name'
+             ,analyticssiteid: 'XXXXXXX'
+            }
+  });
+});
+
+
+
+
 //A Route for Creating a 500 Error (Useful to keep around)
 server.get('/500', function(req, res){
-    throw new Error('This is a 500 Error');
+    throw new Error('This is a 500ish Error');
 });
 
 //The 404 Route (ALWAYS Keep this as the last route)
